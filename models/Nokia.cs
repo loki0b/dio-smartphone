@@ -1,4 +1,6 @@
-namespace Models
+using Models.Apps;
+
+namespace Models.Phones
 {
   class Nokia : Smartphone
   {
@@ -10,6 +12,9 @@ namespace Models
     override public void InstallApp(string appName)
     {
       Console.WriteLine($"Installing {appName}...");
+      PhoneApp app = new PhoneApp(appName, DateTime.Now);
+      AddApp(app);
+      Console.WriteLine($"{appName} Installed Successfully");
     }
   }
 }
