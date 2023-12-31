@@ -38,17 +38,21 @@ public abstract class Smartphone
     
     public void GenerateNumber()
     { 
-      Number = "+55819" + Tools.GenerateCellNumber();
+      Number = Tools.GenerateCellNumber();
     }
 
+    // TODO: encapsulate string numberToCall
     public void Call()
-    {
-      Console.WriteLine($"{Number} Calling...");
+    { 
+      Console.WriteLine("Type the number: ");
+      string numberCall = Console.ReadLine();
+      Console.WriteLine($"Calling to {numberCall}...");
     }
 
     public void ReceiveCall()
-    {
-      Console.WriteLine($"{Number} Receiving call...");
+    { 
+      string receiveNumber = Tools.GenerateCellNumber();
+      Console.WriteLine($"Receiving call {receiveNumber}...");
     }
 
     public abstract void InstallApp(string appName);
