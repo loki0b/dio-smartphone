@@ -1,9 +1,14 @@
-public abstract class Smartphone
+using Models.Apps;
+
+namespace Models.Phones
+{
+  public abstract class Smartphone
   { 
     private string _number;
     private string _imei;
     private string _model;
     private int _memory;
+    readonly private List<PhoneApp> _installedApps = new List<PhoneApp>();
 
     public Smartphone(int memory)
     {
@@ -56,4 +61,20 @@ public abstract class Smartphone
     }
 
     public abstract void InstallApp(string appName);
+
+    public void UninstallApp(string appName)
+    { 
+      Console.WriteLine($"Uninstalling {appName}...");
+      PhoneApp aux = _installedApps.Find(app => app.AppName == appName);
+      _installedApps.Remove(aux);
+      Console.WriteLine($"{appName} Uninstalled Successfully");
+    }
+
+    // TODO: List apps
+
+    protected void AddApp(PhoneApp app)
+    {
+      _installedApps.Add(app);
+    }
   }
+}
