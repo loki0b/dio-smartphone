@@ -3,7 +3,7 @@ public static class Tools
   public static string GenerateCellNumber()
   {
     Random rnd = new Random();
-    string cellNumber = rnd.Next(87654321, 99999999).ToString();
+    string cellNumber = "+55819" + rnd.Next(87654321, 99999999).ToString();
 
     return cellNumber;
   }
