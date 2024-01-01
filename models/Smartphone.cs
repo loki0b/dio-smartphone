@@ -70,7 +70,13 @@ namespace Models.Phones
       Console.WriteLine($"{appName} Uninstalled Successfully");
     }
 
-    // TODO: List apps
+    public void ListApps() 
+    {
+      foreach (var app in _installedApps)
+      {
+        Console.WriteLine(app.AppName);
+      }
+    }
 
     protected void AddApp(PhoneApp app)
     {
