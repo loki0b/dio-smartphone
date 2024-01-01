@@ -3,12 +3,12 @@ namespace Models.Apps
   public class PhoneApp()
   {
     private string _appName;
-    private DateTime _dateInstalled;
+    private double _size;
 
-    public PhoneApp(string appName, DateTime dateInstalled) : this()
+    public PhoneApp(string appName, double size) : this()
     {
       AppName = appName;
-      DateInstalled = dateInstalled;
+      Size = size;
     }
     public string AppName 
     { 
@@ -16,11 +16,11 @@ namespace Models.Apps
       
       set => _appName = value; 
     }
-    public DateTime DateInstalled
+    public double Size
     { 
-      get => _dateInstalled;
+      get => _size;
       
-      set => _dateInstalled = value; 
+      set => _size = value; 
     }
   }
 }

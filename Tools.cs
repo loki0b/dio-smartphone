@@ -14,6 +14,5 @@ public static class Tools
     string cellImei = rnd.Next(1234567, 9999999).ToString() + rnd.Next(12345678, 99999999).ToString();
 
     return cellImei;
-
   }
 }

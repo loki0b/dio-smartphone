@@ -4,17 +4,24 @@ namespace Models.Phones
 {
   class Nokia : Smartphone
   {
-    public Nokia(int memory) : base(memory)
+    public Nokia(double memory) : base(memory)
     {
       Model = "Nokia";
     }
 
-    override public void InstallApp(string appName)
+    override public void InstallApp(string appName, double size)
     {
       Console.WriteLine($"Installing {appName}...");
-      PhoneApp app = new PhoneApp(appName, DateTime.Now);
-      AddApp(app);
-      Console.WriteLine($"{appName} Installed Successfully");
+      if (this.AvailableMemory > size)
+      {
+        PhoneApp app = new PhoneApp(appName, size);
+        AddApp(app);
+        Console.WriteLine($"{appName} Installed Successfully");
+      }
+      else
+      {
+        Console.WriteLine($"{appName} not Installed\nNot Enough Space");
+      }   
     }
   }
 }

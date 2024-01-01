@@ -9,12 +9,19 @@ namespace Models.Phones
       Model = "Iphone"; 
     }
 
-    override public void InstallApp(string appName)
+    override public void InstallApp(string appName, double size)
     { 
-      PhoneApp app = new PhoneApp(appName, DateTime.Now);
-      Console.WriteLine($"Installing {app.AppName}...");
-      AddApp(app);
-      Console.WriteLine($"{appName} Installed Successfully");
+      Console.WriteLine($"Installing {appName}...");
+      if (this.AvailableMemory > size)
+      {
+        PhoneApp app = new PhoneApp(appName, size);
+        AddApp(app);
+        Console.WriteLine($"{appName} Installed Successfully");
+      }
+      else
+      {
+        Console.WriteLine($"{appName} not Installed\nNot Enough Space");
+      }   
     }
   }
 }
