@@ -20,7 +20,15 @@ namespace Models.Apps
     { 
       get => _size;
       
-      set => _size = value; 
+      set
+      {
+        if (value > 0)
+        {
+          _size = value; 
+        }
+
+        throw new Exception();
+      }
     }
   }
 }
