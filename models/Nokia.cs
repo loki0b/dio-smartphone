@@ -11,17 +11,18 @@ namespace Models.Phones
 
     override public void InstallApp(string appName, double size)
     {
-      Console.WriteLine($"Installing {appName}...");
       if (this.AvailableMemory > size)
       {
-        PhoneApp app = new PhoneApp(appName, size);
-        AddApp(app);
+        PhoneApp newApp = new PhoneApp(appName.ToLower(), size);  
+        Console.WriteLine($"Installing {newApp.AppName}...");
+        _installedApps.Add(newApp.AppName, newApp);
+        ModifyAvailableMemory(true, newApp.Size);
         Console.WriteLine($"{appName} Installed Successfully");
-      }
+      } 
       else
       {
         Console.WriteLine($"{appName} not Installed\nNot Enough Space");
-      }   
+      } 
     }
   }
 }
