@@ -7,13 +7,15 @@ namespace Models.Phones
     private string _number;
     private string _imei;
     private string _model;
-    private int _memory;
-    readonly private List<PhoneApp> _installedApps = new List<PhoneApp>();
+    private double _memory;
+    private double _availableMemory;
+    readonly protected Dictionary<string ,PhoneApp> _installedApps = new Dictionary<string, PhoneApp>();
 
-    public Smartphone(int memory)
+    public Smartphone(double memory)
     {
       Memory = memory;
-      Imei = Tools.GenerateImei(); 
+      Imei = Tools.GenerateImei();
+      AvailableMemory = Memory;
     }
 
     public string Imei 
@@ -22,11 +24,22 @@ namespace Models.Phones
       
       set => _imei = value;
     }
-    protected int Memory 
+    protected double Memory 
     { 
       get => _memory;
 
       set => _memory = value;
+    }
+    public double AvailableMemory 
+    { 
+      get => _availableMemory;
+      
+      set 
+      {
+        if (value > Memory || value < 0) throw new Exception();
+
+        _availableMemory = value;
+      }
     }
     protected string Model 
     { 
@@ -46,7 +59,6 @@ namespace Models.Phones
       Number = Tools.GenerateCellNumber();
     }
 
-    // TODO: encapsulate string numberToCall
     public void Call()
     { 
       Console.WriteLine("Type the number: ");
@@ -54,33 +66,48 @@ namespace Models.Phones
       Console.WriteLine($"Calling to {numberCall}...");
     }
 
-    public void ReceiveCall()
+    public void RecieveCall()
     { 
-      string receiveNumber = Tools.GenerateCellNumber();
-      Console.WriteLine($"Receiving call {receiveNumber}...");
+      string recieveNumber = Tools.GenerateCellNumber();
+      Console.WriteLine($"Recieving call {recieveNumber}...");
     }
 
-    public abstract void InstallApp(string appName);
+    public abstract void InstallApp(string appName, double size);
 
     public void UninstallApp(string appName)
     { 
-      Console.WriteLine($"Uninstalling {appName}...");
-      PhoneApp aux = _installedApps.Find(app => app.AppName == appName);
-      _installedApps.Remove(aux);
-      Console.WriteLine($"{appName} Uninstalled Successfully");
+      appName = appName.ToLower();
+      try
+      { 
+        Console.WriteLine($"Uninstalling {_installedApps[appName].AppName}");
+        ModifyAvailableMemory(true, _installedApps[appName].Size);
+        _installedApps.Remove(appName.ToLower());
+        Console.WriteLine($"{appName.ToLower()} Uninstalled Successfuly");
+      }
+      catch (KeyNotFoundException)
+      {
+        Console.WriteLine("App não encontrado.");
+      }
     }
 
     public void ListApps() 
     {
       foreach (var app in _installedApps)
       {
-        Console.WriteLine(app.AppName);
+        Console.WriteLine(app.Value.AppName);
       }
     }
-
-    protected void AddApp(PhoneApp app)
-    {
-      _installedApps.Add(app);
+    protected void ModifyAvailableMemory(bool option, double size)
+    { 
+      // Add available memory if true otherwise remove available memory
+      if (option)
+      {
+        _availableMemory += size;
+      }
+      else
+      {
+        _availableMemory -= size;
+      }
     }
   }
 }
